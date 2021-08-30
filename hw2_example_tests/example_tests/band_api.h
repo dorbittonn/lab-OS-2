@@ -120,6 +120,7 @@ int band_listen(pid_t member, unsigned char *chord) {
 		"pushl %%ecx;"
 		"movl $246, %%eax;"
 		"movl %1, %%ebx;"
+		"movl %2, %%ecx;"
 		"int $0x80;"
 		"movl %%eax, %0;"
 		"popl %%ecx;"
