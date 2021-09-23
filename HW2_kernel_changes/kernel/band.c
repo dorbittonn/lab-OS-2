@@ -102,7 +102,7 @@ int band_create(int instrument) {
 	// Leave the current band properly
 	leave_band(new_band);
 	
-	//print_bands();
+	print_bands();
 
 	return 0;
 }
@@ -152,7 +152,13 @@ int band_join(pid_t member, int instrument) {
 		/*leave the previous band if exists*/
 		leave_band(member_ts->band);
 		}
-	//print_bands();
+	print_bands();
+
+	if(instrument != BASS && current->band->instruments[BASS] != -1 && \
+		find_task_by_pid(current->band->instruments[BASS])->state == TASK_RUNNING){
+		printk("yield:");
+		yield();
+	}
 
 	return 0;
 }
@@ -179,7 +185,7 @@ int band_play(int instrument, unsigned char note) {
 
 	//printk("char played is %d\n", current->band->notes[instrument].data);
 
-	//print_bands();
+	print_bands();
 
 	return 0;
 }
@@ -225,7 +231,7 @@ int band_listen(pid_t member, unsigned char* chord) {
 		return -EAGAIN;
 
 	}
-	//print_bands();
+	print_bands();
 
 	return 0;
 }
